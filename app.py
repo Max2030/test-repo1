@@ -44,4 +44,3 @@ if __name__ == '__main__':
     db.init_app(app)
     # run the appication:
     app.run(port=81)
-
