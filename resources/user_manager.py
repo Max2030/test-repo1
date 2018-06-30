@@ -3,7 +3,7 @@
 # =============================================================================
 from flask_restful import Resource
 from models.users import UserModel
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_claims
 
 from resources.user_register import UserRegister
 
@@ -35,6 +35,10 @@ class UserManager(Resource):
 
     @jwt_required
     def delete(self, name):
+        claims = get_jwt_claims()
+
+        if not claims['is_admin']:
+            return {'message': "Admin prevelige is needed!"}, 401
         try:
             user = UserModel.find_by_username(name)
 

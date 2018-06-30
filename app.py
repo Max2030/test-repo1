@@ -26,6 +26,12 @@ api = Api(app)
 
 jwt = JWTManager(app) # this creates /auth end point
 
+@jwt.user_claims_loader
+def add_claims_to_jwt(identity):
+    if identity == 1: # This should be coming from the datanase
+        return {'is_admin': True}
+    return {'is_admin': False}
+
 api.add_resource(UserLogin, '/login')
 
 api.add_resource(Item, '/item/<string:name>')
