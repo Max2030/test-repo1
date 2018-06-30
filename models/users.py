@@ -44,11 +44,3 @@ class UserModel(db.Model):
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
 #==================================================
-if __name__ == '__name__':
-
-    user = UserModel.find_by_username('mohamed')
-    print('{} {} {}'.format(user.id, user.username, user.password))
-
-    for i in range(1, 7):
-        user = UserModel.find_by_id(i)
-        print('{} {} {}'.format(user.id, user.username, user.password))
