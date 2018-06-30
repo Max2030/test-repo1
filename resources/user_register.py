@@ -2,6 +2,8 @@
 # This class registers the user
 # =============================================================================
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
+
 from models.users import UserModel
 
 class UserRegister(Resource):
@@ -12,6 +14,7 @@ class UserRegister(Resource):
     parser.add_argument('password', type=str, required=True,
                         help="This field cannot be blank")
 
+    @jwt_required
     def post(self):
         data = UserRegister.parser.parse_args()
 
@@ -28,6 +31,7 @@ class UserRegister(Resource):
 
 class UserById(Resource):
 
+    @jwt_required
     def get(self, user_id):
         try:
             user = UserModel.find_by_id(user_id)
@@ -39,6 +43,8 @@ class UserById(Resource):
         except:
             return {'message': "An error occurred while searching user id {}!".format(user_id)}, 500
 
+
+    @jwt_required
     def delete(self, user_id):
         try:
             user = UserModel.find_by_id(user_id)

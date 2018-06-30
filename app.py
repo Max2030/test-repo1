@@ -5,9 +5,10 @@
 import os
 from flask import Flask
 from flask_restful import Api
-from flask_jwt import JWT
-from security_data import authenticate, identity
+from flask_jwt_extended import JWTManager
+#from security_data import authenticate, identity
 
+from resources.user_login_api import UserLogin
 from resources.user_register import UserRegister, UserById
 from resources.user_manager import UserManager, UserList
 from resources.items_api import Item
@@ -20,10 +21,12 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['PROPAGATE_EXCEPTIONS'] = True
-app.secret_key = 'mohamed'
+app.secret_key = 'mohamed' #app.config['JWT-SECRET_KEY']
 api = Api(app)
 
-jwt = JWT(app, authenticate, identity) # this creates /auth end point
+jwt = JWTManager(app) # this creates /auth end point
+
+api.add_resource(UserLogin, '/login')
 
 api.add_resource(Item, '/item/<string:name>')
 api.add_resource(ItemList, '/items')

@@ -3,10 +3,13 @@
 # =============================================================================
 from flask_restful import Resource
 from models.users import UserModel
+from flask_jwt_extended import jwt_required
+
 from resources.user_register import UserRegister
 
 class UserManager(Resource):
 
+    @jwt_required
     def get(self, name):
         user = UserModel.find_by_username(name)
 
@@ -16,7 +19,7 @@ class UserManager(Resource):
         return {'message': "User '{}' does not exist".format(name)}, 400
 
 
-
+    @jwt_required
     def put(self, name):
         data = UserRegister.parser.parse_args()
 
@@ -30,6 +33,7 @@ class UserManager(Resource):
         return user.json()
 
 
+    @jwt_required
     def delete(self, name):
         try:
             user = UserModel.find_by_username(name)
@@ -45,6 +49,7 @@ class UserManager(Resource):
 
 class UserList(Resource):
 
+    @jwt_required
     def get(self):
         return {'users': [user.json() for user in UserModel.find_all()]}
 
