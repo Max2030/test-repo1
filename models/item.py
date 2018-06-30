@@ -46,6 +46,3 @@ class ItemModel(db.Model):
         db.session.commit()
 
 #===========================================================
-if __name__ == '__main__':
-    data = ItemModel()
-    print(data.find_all())
