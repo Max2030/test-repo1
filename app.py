@@ -14,6 +14,7 @@ from resources.user_manager import UserManager, UserList
 from resources.items_api import Item
 from resources.items_list_api import ItemList
 from resources.store_api import Store, StoreList
+from resources.token_refresh import TokenRefresh
 
 
 
@@ -45,6 +46,8 @@ api.add_resource(UserList, '/users')
 
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(StoreList, '/stores')
+
+api.add_resource(TokenRefresh, '/refresh')
 
 #==================================================
 if __name__ == '__main__':
