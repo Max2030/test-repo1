@@ -36,9 +36,9 @@ class UserManager(Resource):
 
             if user:
                 user.delete_from_db()
-                return {'message': "User '{}' has been deleted!".format(name)}
+                return {'message': "User '{}' has been deleted!".format(name)}, 200
             else:
-                return {'message': "User '{}' does not exist".format(name)}
+                return {'message': "User '{}' does not exist".format(name)}, 404
         except:
             return {"message": "Ann error occurred while deleting user '{}'".format(name)}
 #====================================================

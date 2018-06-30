@@ -35,9 +35,9 @@ class UserById(Resource):
             if user:
                 return user.json(), 200
             else:
-                return {'message': "User with user id '{}' does not exist!".format(user_id)}
+                return {'message': "User with user id '{}' does not exist!".format(user_id)}, 404
         except:
-            return {'message': "An error occurred while searching user id {}!".format(user_id)}
+            return {'message': "An error occurred while searching user id {}!".format(user_id)}, 500
 
     def delete(self, user_id):
         try:
@@ -47,7 +47,7 @@ class UserById(Resource):
                 user.delete_from_db()
                 return {'message': "User '{}' has been successly deleted".format(user.username)}
             else:
-                return {'message': "User with user id '{}' does not exist".format(user_id)}
+                return {'message': "User with user id '{}' does not exist".format(user_id)}, 404
         except:
-            return {'name': "Error occured, while deleting '{}'".format(user_id)}
+            return {'name': "Error occured, while deleting '{}'".format(user_id)}, 500
 #=============================================================
