@@ -25,3 +25,29 @@ class UserRegister(Resource):
 
         return {'message': 'User created successfuly'}, 201
 #====================================================
+
+class UserById(Resource):
+
+    def get(self, user_id):
+        try:
+            user = UserModel.find_by_id(user_id)
+
+            if user:
+                return user.json(), 200
+            else:
+                return {'message': "User with user id '{}' does not exist!".format(user_id)}
+        except:
+            return {'message': "An error occurred while searching user id {}!".format(user_id)}
+
+    def delete(self, user_id):
+        try:
+            user = UserModel.find_by_id(user_id)
+
+            if user:
+                user.delete_from_db()
+                return {'message': "User '{}' has been successly deleted".format(user.username)}
+            else:
+                return {'message': "User with user id '{}' does not exist".format(user_id)}
+        except:
+            return {'name': "Error occured, while deleting '{}'".format(user_id)}
+#=============================================================

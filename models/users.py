@@ -18,7 +18,7 @@ class UserModel(db.Model):
 
 
     def json(self):
-        return {'username': self.username, 'password': self.password}
+        return {'id': self.id, 'username': self.username}
 
 
     def save_to_db(self):
@@ -34,6 +34,10 @@ class UserModel(db.Model):
     @classmethod
     def find_by_username(cls, username):
         return cls.query.filter_by(username=username).first()
+
+    @classmethod
+    def find_all(cls):
+        return cls.query.all()
 
 
     @classmethod

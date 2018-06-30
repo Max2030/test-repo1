@@ -12,7 +12,7 @@ class UserManager(Resource):
 
         if user:
             return user.json()
-        # if user does not exist, return all the users
+
         return {'message': "User '{}' does not exist".format(name)}, 400
 
 
@@ -36,7 +36,9 @@ class UserManager(Resource):
 
             if user:
                 user.delete_from_db()
-            return {'message': "User '{}' has been deleted!".format(name)}
+                return {'message': "User '{}' has been deleted!".format(name)}
+            else:
+                return {'message': "User '{}' does not exist".format(name)}
         except:
             return {"message": "Ann error occurred while deleting user '{}'".format(name)}
 #====================================================
@@ -44,7 +46,7 @@ class UserManager(Resource):
 class UserList(Resource):
 
     def get(self):
-        return {'users': [user.json() for user in UserModel.query.all()]}
+        return {'users': [user.json() for user in UserModel.find_all()]}
 
 #========================================================================
 
