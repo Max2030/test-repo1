@@ -3,7 +3,8 @@
 # =============================================================================
 
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required, get_jwt_claims
+from flask_jwt_extended import (
+        jwt_required, get_jwt_claims, fresh_jwt_required)
 
 from models.item import ItemModel
 
@@ -31,7 +32,7 @@ class Item(Resource):
             return item.json()
         return {'message': 'Item {} not found'.format(name)}, 404
 
-    @jwt_required
+    @fresh_jwt_required
     def post(self, name):
         if ItemModel.find_by_name(name):
             return {'message': "Item with name '{}' already exists".format(name)}, 400
